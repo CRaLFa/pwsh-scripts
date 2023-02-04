@@ -8,7 +8,7 @@ function Prompt {
     '[{0}] {1} > ' -f $role, ((Get-Location).Path -split '::')[-1]
 }
 
-function Open-Administrator {
+function Start-Administrator {
     Start-Process powershell.exe -Verb RunAs
 }
 
@@ -30,7 +30,7 @@ function Edit-EnvironmentVariables {
         -Verb RunAs
 }
 
-Set-Alias su Open-Administrator
+Set-Alias su Start-Administrator
 Set-Alias hosts Edit-Hosts
 Set-Alias env Edit-EnvironmentVariables
 
