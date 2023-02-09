@@ -1,11 +1,14 @@
 function Prompt {
+    '[{0}] {1} > ' -f (Get-Role), ((Get-Location).Path -split '::')[-1]
+}
+
+function Get-Role {
     $principal = [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
     if ($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        $role = 'Admin'
+        'Admin'
     } else {
-        $role = 'User'
+        'User'
     }
-    '[{0}] {1} > ' -f $role, ((Get-Location).Path -split '::')[-1]
 }
 
 function Start-Administrator {
@@ -45,3 +48,7 @@ Set-PSReadlineKeyHandler -Chord Ctrl+u -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord Ctrl+w -Function BackwardKillWord
 Set-PSReadlineKeyHandler -Chord Ctrl+Insert -Function Copy
 Set-PSReadLineKeyHandler -Chord Tab -Function Complete
+
+if (Test-Path -Path 'C:\Program Files (x86)\gsudo\gsudoModule.psd1') {
+    Import-Module 'C:\Program Files (x86)\gsudo\gsudoModule.psd1'
+}
