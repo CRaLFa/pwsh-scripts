@@ -33,9 +33,24 @@ function Edit-EnvironmentVariables {
         -Verb RunAs
 }
 
+function Find-File ($path, $name, [int] $maxdepth, [switch] $gui) {
+    if ($maxdepth -gt 0) {
+        $cmdline = "Get-ChildItem -Path '${path}' -Depth ${maxdepth} -Filter '${name}'"
+    } else {
+        $cmdline = "Get-ChildItem -Path '${path}' -Recurse -Filter '${name}'"
+    }
+    if ($gui) {
+        $cmdline += ' | Select-Object -Property FullName | Out-GridView'
+    } else {
+        $cmdline += ' | ForEach-Object { $_.FullName }'
+    }
+    Invoke-Expression -Command "$cmdline"
+}
+
 Set-Alias su Start-Administrator
 Set-Alias hosts Edit-Hosts
 Set-Alias env Edit-EnvironmentVariables
+Set-Alias find Find-File
 
 Set-PSReadlineKeyHandler -Chord Alt+b -Function BackwardWord
 Set-PSReadlineKeyHandler -Chord Alt+d -Function KillWord
