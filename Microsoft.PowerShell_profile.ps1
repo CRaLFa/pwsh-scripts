@@ -1,4 +1,4 @@
-function Prompt {
+function prompt {
     '[{0}] {1} > ' -f (Get-Role), ((Get-Location).Path -split '::')[-1]
 }
 
@@ -9,10 +9,6 @@ function Get-Role {
     } else {
         'User'
     }
-}
-
-function Start-Administrator {
-    Start-Process powershell.exe -Verb RunAs
 }
 
 function Edit-Hosts {
@@ -47,7 +43,6 @@ function Find-File ($path, $name, [int] $maxdepth, [switch] $gui) {
     Invoke-Expression -Command "$cmdline"
 }
 
-Set-Alias su Start-Administrator
 Set-Alias hosts Edit-Hosts
 Set-Alias env Edit-EnvironmentVariables
 Set-Alias find Find-File
