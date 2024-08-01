@@ -58,7 +58,3 @@ Set-PSReadlineKeyHandler -Chord Ctrl+u -Function BackwardKillLine
 Set-PSReadlineKeyHandler -Chord Ctrl+w -Function BackwardKillWord
 Set-PSReadlineKeyHandler -Chord Ctrl+Insert -Function Copy
 Set-PSReadLineKeyHandler -Chord Tab -Function Complete
-
-if (Test-Path -Path 'C:\Program Files (x86)\gsudo\gsudoModule.psd1') {
-    Import-Module 'C:\Program Files (x86)\gsudo\gsudoModule.psd1'
-}
