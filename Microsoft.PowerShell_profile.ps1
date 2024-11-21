@@ -1,14 +1,15 @@
 function prompt {
-    '[{0}] {1} > ' -f (Get-Role), ((Get-Location).Path -split '::')[-1]
+	if (Get-IsAdministrator) {
+		$role = 'Admin'
+	} else {
+		$role = 'User'
+	}
+    '[{0}] {1} > ' -f $role, ((Get-Location).Path -split '::')[-1]
 }
 
-function Get-Role {
+function Get-IsAdministrator {
     $principal = [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
-    if ($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        'Admin'
-    } else {
-        'User'
-    }
+    $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
 function Edit-Hosts {
