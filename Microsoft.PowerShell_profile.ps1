@@ -4,44 +4,44 @@ function prompt {
 	} else {
 		$role = 'User'
 	}
-    '[{0}] {1} > ' -f $role, ((Get-Location).Path -split '::')[-1]
+	'[{0}] {1} > ' -f $role, ((Get-Location).Path -split '::')[-1]
 }
 
 function Get-IsAdministrator {
-    $principal = [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+	$principal = [Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
+	$principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
 function Edit-Hosts {
-    Start-Process `
-        -FilePath wsl.exe `
-        -ArgumentList 'vim /mnt/c/Windows/System32/drivers/etc/hosts' `
-        -Verb RunAs
+	Start-Process `
+		-FilePath wsl.exe `
+		-ArgumentList 'vim /mnt/c/Windows/System32/drivers/etc/hosts' `
+		-Verb RunAs
 }
 
 function Get-EnvironmentVariables {
-    [Environment]::GetEnvironmentVariables().GetEnumerator() | Sort-Object -Property Key
+	[Environment]::GetEnvironmentVariables().GetEnumerator() | Sort-Object -Property Key
 }
 
 function Edit-EnvironmentVariables {
-    Start-Process `
-        -FilePath rundll32.exe `
-        -ArgumentList 'sysdm.cpl,EditEnvironmentVariables' `
-        -Verb RunAs
+	Start-Process `
+		-FilePath rundll32.exe `
+		-ArgumentList 'sysdm.cpl,EditEnvironmentVariables' `
+		-Verb RunAs
 }
 
 function Find-File ($path, $name, [int] $maxdepth, [switch] $gui) {
-    if ($maxdepth -gt 0) {
-        $cmdline = "Get-ChildItem -Path '${path}' -Depth ${maxdepth} -Filter '${name}'"
-    } else {
-        $cmdline = "Get-ChildItem -Path '${path}' -Recurse -Filter '${name}'"
-    }
-    if ($gui) {
-        $cmdline += ' | Select-Object -Property FullName | Out-GridView'
-    } else {
-        $cmdline += ' | ForEach-Object { $_.FullName }'
-    }
-    Invoke-Expression -Command "$cmdline"
+	if ($maxdepth -gt 0) {
+		$cmdline = "Get-ChildItem -Path '${path}' -Depth ${maxdepth} -Filter '${name}'"
+	} else {
+		$cmdline = "Get-ChildItem -Path '${path}' -Recurse -Filter '${name}'"
+	}
+	if ($gui) {
+		$cmdline += ' | Select-Object -Property FullName | Out-GridView'
+	} else {
+		$cmdline += ' | ForEach-Object { $_.FullName }'
+	}
+	Invoke-Expression -Command "$cmdline"
 }
 
 Set-Alias hosts Edit-Hosts

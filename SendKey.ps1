@@ -7,13 +7,13 @@ static extern void keybd_event(byte byVk, byte byScan, uint dwFlags, UIntPtr dwE
 
 public static void KeyDown(uint vKey)
 {
-    keybd_event((byte) vKey, 0, KEYEVENTF_EXTENDEDKEY | 0, UIntPtr.Zero);
-    // Thread.Sleep(10);
+	keybd_event((byte) vKey, 0, KEYEVENTF_EXTENDEDKEY | 0, UIntPtr.Zero);
+	// Thread.Sleep(10);
 }
 
 public static void KeyUp(uint vKey)
 {
-    keybd_event((byte) vKey, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+	keybd_event((byte) vKey, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
 }
 '@ -Name SendKey -UsingNamespace System.Threading -PassThru
 
